@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[21]:
+# In[3]:
 
 
 #
@@ -19,11 +19,13 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import matplotlib.font_manager as fm
 import platform
+import japanize_matplotlib
+
 #plt.rcParams['font.family'] = 'Hiragino Sans'
 #plt.rcParams['font.family'] = 'Noto Sans CJK JP'
 
 
-# In[23]:
+# In[4]:
 
 
 #
@@ -41,9 +43,10 @@ sw_data = 'server'
 # sw_comp = 'mac'
 sw_comp = 'linux'
 
-# jupter lab で run するか？
-sw_run = True
-#sw_run = False
+# この page のみで run するか？
+# runしない場合は SNA.py のみを作成
+# sw_run = True
+sw_run = False
 
 if sw_comp == 'mac':
     plt.rcParams['font.family'] = 'Hiragino Sans'
@@ -93,7 +96,7 @@ df.columns = df.columns.astype(str)
 # In[18]:
 
 
-df.head()
+#df.head()
 
 
 # In[ ]:
@@ -103,7 +106,7 @@ df.head()
 # streamlit（開始）
 #
 
-st.title("データフレームの表示例")
+st.title("SNAデータのグラフを描画")
 st.dataframe(df)  # インタラクティブな表形式で表示（スクロールや並べ替えが可能）
 
 # 項目リストを表示（複数選択可）
@@ -132,7 +135,7 @@ if st.button("グラフを描画"):
         ax.grid(True)
 
         # ✅ 年のラベルが重ならないように回転と位置調整
-        plt.xticks(rotation=45, ha='right')
+        plt.xticks(rotation=50, ha='right')
 
         # ✅ Y軸に3桁カンマを追加
         ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f"{int(x):,}"))
@@ -152,7 +155,7 @@ if st.button("グラフを描画"):
 
 
 
-# In[22]:
+# In[ ]:
 
 
 #
