@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[3]:
+# In[21]:
 
 
 #
@@ -17,10 +17,13 @@ import os
 
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-plt.rcParams['font.family'] = 'Hiragino Sans'
+import matplotlib.font_manager as fm
+import platform
+#plt.rcParams['font.family'] = 'Hiragino Sans'
+#plt.rcParams['font.family'] = 'Noto Sans CJK JP'
 
 
-# In[12]:
+# In[23]:
 
 
 #
@@ -30,16 +33,22 @@ plt.rcParams['font.family'] = 'Hiragino Sans'
 folder_path='MacroData/SNA/'
 file_name = 'SNA_data.csv'
 
+# データの場所
 #sw_data = 'local'
 sw_data = 'server'
 
+# 使用しているコンピューターのシステム
+# sw_comp = 'mac'
+sw_comp = 'linux'
+
+# jupter lab で run するか？
 sw_run = True
 #sw_run = False
 
-
-# In[ ]:
-
-
+if sw_comp == 'mac':
+    plt.rcParams['font.family'] = 'Hiragino Sans'
+else:
+    plt.rcParams['font.family'] = 'Noto Sans CJK JP'
 
 
 
@@ -143,7 +152,7 @@ if st.button("グラフを描画"):
 
 
 
-# In[19]:
+# In[22]:
 
 
 #
