@@ -13,7 +13,7 @@
 import streamlit as st
 
 
-# In[ ]:
+# In[2]:
 
 
 #
@@ -27,7 +27,7 @@ sw_run = True
 # In[ ]:
 
 
-st.title("Streamlit マルチページアプリ")
+st.title("グラフのプロット")
 st.write("左のサイドバーからページを選択してください。")
 
 
@@ -49,7 +49,7 @@ st.write("左のサイドバーからページを選択してください。")
 
 
 
-# In[3]:
+# In[ ]:
 
 
 #
