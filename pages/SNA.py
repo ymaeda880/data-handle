@@ -159,6 +159,11 @@ else:
     font_prop = None
 
 
+# FontProperties で読み込み
+font_prop = fm.FontProperties(fname="NotoSansCJK-Regular.ttc")
+plt.rcParams['font.family'] = font_prop.get_name()
+
+
 
 # In[18]:
 
@@ -202,7 +207,7 @@ if st.button("グラフを描画"):
 
 
 
-# In[ ]:
+# In[21]:
 
 
 #
