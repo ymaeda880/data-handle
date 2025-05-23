@@ -50,6 +50,9 @@ sw_run = True
 
 # FontProperties で読み込み
 font_prop = fm.FontProperties(fname="NotoSansCJK-Regular.ttc")
+plt.rcParams['font.family'] = font_prop.get_name()
+
+#font_prop = fm.FontProperties(fname="NotoSansCJK-Regular.ttc")
 #plt.rcParams['font.family'] = font_prop.get_name()
 
 
