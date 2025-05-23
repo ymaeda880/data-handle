@@ -117,16 +117,17 @@ selected_items = st.multiselect("表示する項目を選んでください", df
 
 # === フォント定義（名前、URL、ファイル名） ===
 FONT_CANDIDATES = {
-    "Hiragino":{},
+    "Hiragino (mac専用)": {},
     "Noto Sans CJK JP": {
         "url": "https://github.com/googlefonts/noto-cjk/blob/main/Sans/OTC/NotoSansCJK-Regular.ttc?raw=true",
         "filename": "NotoSansCJK-Regular.ttc"
     },
     "IPAexGothic": {
-        "url": "https://moji.or.jp/wp-content/ipafont/IPAexfont/IPAexGothic/IPAexGothic.ttf",
-        "filename": "IPAexGothic.ttf"
+        "url": "https://raw.githubusercontent.com/adobe-fonts/ipa-fonts/master/IPAexfont/ipaexg.ttf",
+        "filename": "ipaexg.ttf"
     }
 }
+
 
 # === ボタン選択インターフェース ===
 st.subheader("フォントを選んでください")
@@ -138,30 +139,28 @@ for name in FONT_CANDIDATES:
         st.write('選択されたフォント：',name)
 
 
-if selected_font:
-    if selected_font == 'Hiragino':
+if selected_font is not None:
+    if selected_font == 'Hiragino (mac専用)':
         plt.rcParams['font.family'] = 'Hiragino Sans'
+        font_prop = fm.FontProperties(fname="/System/Library/Fonts/ヒラギノ角ゴシック W3.ttc")  # Mac用
         st.success("Hiraginoフォントを使用しました（mac限定）")
     else:
         font_info = FONT_CANDIDATES[selected_font]
         font_path = font_info["filename"]
-        st.write(font_info)
 
-        # === フォントをローカルに保存（なければDL） ===
         if not os.path.exists(font_path):
             with st.spinner(f"{selected_font} をダウンロード中..."):
                 urllib.request.urlretrieve(font_info["url"], font_path)
 
-        # === matplotlib に適用 ===
         font_prop = fm.FontProperties(fname=font_path)
         plt.rcParams['font.family'] = font_prop.get_name()
         st.success(f"{selected_font} フォントを適用しました")
+else:
+    font_prop = None
 
 
 
-
-
-# In[ ]:
+# In[18]:
 
 
 #
@@ -176,9 +175,9 @@ if st.button("グラフを描画"):
         fig, ax = plt.subplots()
         for item in selected_items:
             ax.plot(df.columns, df.loc[item], label=item, marker='o')
-        ax.set_xlabel("年")
-        ax.set_ylabel("値")
-        ax.set_title("選択した項目の推移")
+        ax.set_xlabel("年", fontproperties=font_prop if font_prop else None)
+        ax.set_ylabel("値", fontproperties=font_prop if font_prop else None)
+        ax.set_title("選択した項目の推移", fontproperties=font_prop if font_prop else None)
         ax.legend()
         ax.grid(True)
 
