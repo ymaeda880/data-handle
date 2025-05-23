@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[1]:
 
 
 #
@@ -26,7 +26,20 @@ import platform
 #plt.rcParams['font.family'] = 'Noto Sans CJK JP'
 
 
-# In[4]:
+# In[ ]:
+
+
+def open_by_excel(df, file_name = 'out', folder_path='MacroData/SNA/',
+            sheet_name='データ'):
+    file_name = file_name+'.xlsx'
+    file_path = folder_path + file_name
+    # Excel に保存
+    df.to_excel(file_path, index=True, sheet_name=sheet_name)
+    # ファイルを開く（Mac: 'open' / Windows: 'start' / Linux: 'xdg-open'）
+    subprocess.run(['open', file_path])
+
+
+# In[2]:
 
 
 #
@@ -48,25 +61,20 @@ sw_run = True
 
 #plt.rcParams['font.family'] = 'Hiragino Sans'
 
-# FontProperties で読み込み
-font_prop = fm.FontProperties(fname="pages/NotoSansCJK-Regular.ttc")
+if platform.system() == 'Darwin':
+    # macOS の場合
+    #font_prop = None
+    #plt.rcParams['font.family'] = 'Hiragino Sans'
+    font_path = "/System/Library/Fonts/Hiragino Sans GB.ttc"
+else:
+    # Streamlit Cloud（Linux）などその他
+    font_path = "pages/NotoSansCJK-Regular.ttc"
+
+font_prop = fm.FontProperties(fname=font_path)
 plt.rcParams['font.family'] = font_prop.get_name()
 
 #font_prop = fm.FontProperties(fname="NotoSansCJK-Regular.ttc")
 #plt.rcParams['font.family'] = font_prop.get_name()
-
-
-# In[4]:
-
-
-def open_by_excel(df, file_name = 'out', folder_path='MacroData/SNA/',
-            sheet_name='データ'):
-    file_name = file_name+'.xlsx'
-    file_path = folder_path + file_name
-    # Excel に保存
-    df.to_excel(file_path, index=True, sheet_name=sheet_name)
-    # ファイルを開く（Mac: 'open' / Windows: 'start' / Linux: 'xdg-open'）
-    subprocess.run(['open', file_path])
 
 
 # In[ ]:
@@ -135,10 +143,10 @@ if st.button("グラフを描画"):
         ax.legend(prop=font_prop)
         ax.grid(True)
 
-        # \UTF{2705} 年のラベルが重ならないように回転と位置調整
+        # ✅ 年のラベルが重ならないように回転と位置調整
         plt.xticks(rotation=50, ha='right')
 
-        # \UTF{2705} Y軸に3桁カンマを追加
+        # ✅ Y軸に3桁カンマを追加
         ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f"{int(x):,}"))
 
         st.pyplot(fig)
@@ -156,7 +164,7 @@ if st.button("グラフを描画"):
 
 
 
-# In[1]:
+# In[5]:
 
 
 #
