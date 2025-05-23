@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 #
@@ -26,7 +26,7 @@ import platform
 #plt.rcParams['font.family'] = 'Noto Sans CJK JP'
 
 
-# In[3]:
+# In[4]:
 
 
 #
@@ -49,7 +49,7 @@ sw_run = True
 #plt.rcParams['font.family'] = 'Hiragino Sans'
 
 # FontProperties で読み込み
-font_prop = fm.FontProperties(fname="NotoSansCJK-Regular.ttc")
+font_prop = fm.FontProperties(fname="pages/NotoSansCJK-Regular.ttc")
 plt.rcParams['font.family'] = font_prop.get_name()
 
 #font_prop = fm.FontProperties(fname="NotoSansCJK-Regular.ttc")
@@ -135,10 +135,10 @@ if st.button("グラフを描画"):
         ax.legend(prop=font_prop)
         ax.grid(True)
 
-        # ✅ 年のラベルが重ならないように回転と位置調整
+        # \UTF{2705} 年のラベルが重ならないように回転と位置調整
         plt.xticks(rotation=50, ha='right')
 
-        # ✅ Y軸に3桁カンマを追加
+        # \UTF{2705} Y軸に3桁カンマを追加
         ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f"{int(x):,}"))
 
         st.pyplot(fig)
@@ -156,7 +156,7 @@ if st.button("グラフを描画"):
 
 
 
-# In[ ]:
+# In[1]:
 
 
 #
