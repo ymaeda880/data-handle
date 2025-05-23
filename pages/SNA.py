@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[3]:
+# In[1]:
 
 
 #
@@ -18,14 +18,15 @@ import os
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import matplotlib.font_manager as fm
+import urllib.request
 import platform
-import japanize_matplotlib
+#import japanize_matplotlib
 
 #plt.rcParams['font.family'] = 'Hiragino Sans'
 #plt.rcParams['font.family'] = 'Noto Sans CJK JP'
 
 
-# In[4]:
+# In[3]:
 
 
 #
@@ -39,19 +40,13 @@ file_name = 'SNA_data.csv'
 #sw_data = 'local'
 sw_data = 'server'
 
-# 使用しているコンピューターのシステム
-# sw_comp = 'mac'
-sw_comp = 'linux'
 
 # この page のみで run するか？
 # runしない場合は SNA.py のみを作成
-# sw_run = True
-sw_run = False
+sw_run = True
+#sw_run = False
 
-if sw_comp == 'mac':
-    plt.rcParams['font.family'] = 'Hiragino Sans'
-else:
-    plt.rcParams['font.family'] = 'Noto Sans CJK JP'
+plt.rcParams['font.family'] = 'Hiragino Sans'
 
 
 
@@ -111,6 +106,59 @@ st.dataframe(df)  # インタラクティブな表形式で表示（スクロー
 
 # 項目リストを表示（複数選択可）
 selected_items = st.multiselect("表示する項目を選んでください", df.index.tolist())
+
+
+# In[8]:
+
+
+#
+# フォントの選択
+#
+
+# === フォント定義（名前、URL、ファイル名） ===
+FONT_CANDIDATES = {
+    "Hiragino":{},
+    "Noto Sans CJK JP": {
+        "url": "https://github.com/googlefonts/noto-cjk/blob/main/Sans/OTC/NotoSansCJK-Regular.ttc?raw=true",
+        "filename": "NotoSansCJK-Regular.ttc"
+    },
+    "IPAexGothic": {
+        "url": "https://moji.or.jp/wp-content/ipafont/IPAexfont/IPAexGothic/IPAexGothic.ttf",
+        "filename": "IPAexGothic.ttf"
+    }
+}
+
+# === ボタン選択インターフェース ===
+st.subheader("フォントを選んでください")
+
+selected_font = None
+for name in FONT_CANDIDATES:
+    if st.button(name):
+        selected_font = name
+        st.write('選択されたフォント：',name)
+
+
+if selected_font:
+    if selected_font == 'Hiragino':
+        plt.rcParams['font.family'] = 'Hiragino Sans'
+        st.success("Hiraginoフォントを使用しました（mac限定）")
+    else:
+        font_info = FONT_CANDIDATES[selected_font]
+        font_path = font_info["filename"]
+        st.write(font_info)
+
+        # === フォントをローカルに保存（なければDL） ===
+        if not os.path.exists(font_path):
+            with st.spinner(f"{selected_font} をダウンロード中..."):
+                urllib.request.urlretrieve(font_info["url"], font_path)
+
+        # === matplotlib に適用 ===
+        font_prop = fm.FontProperties(fname=font_path)
+        plt.rcParams['font.family'] = font_prop.get_name()
+        st.success(f"{selected_font} フォントを適用しました")
+
+
+
 
 
 # In[ ]:
