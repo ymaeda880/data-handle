@@ -29,7 +29,7 @@ import platform
 # In[ ]:
 
 
-def open_by_excel(df, file_name = 'out', folder_path='MacroData/SNA/',
+def open_by_excel(df, file_name = 'out', folder_path='../MacroData/SNA/',
             sheet_name='データ'):
     file_name = file_name+'.xlsx'
     file_path = folder_path + file_name
@@ -39,19 +39,15 @@ def open_by_excel(df, file_name = 'out', folder_path='MacroData/SNA/',
     subprocess.run(['open', file_path])
 
 
-# In[2]:
+# In[7]:
 
 
 #
 # 環境設定
 #
 
-folder_path='MacroData/SNA/'
+folder_path='../MacroData/SNA/'
 file_name = 'SNA_data.csv'
-
-# データの場所
-#sw_data = 'local'
-sw_data = 'server'
 
 
 # この page のみで run するか？
@@ -59,16 +55,15 @@ sw_data = 'server'
 sw_run = True
 #sw_run = False
 
-#plt.rcParams['font.family'] = 'Hiragino Sans'
 
 if platform.system() == 'Darwin':
     # macOS の場合
-    #font_prop = None
-    #plt.rcParams['font.family'] = 'Hiragino Sans'
     font_path = "/System/Library/Fonts/Hiragino Sans GB.ttc"
+    file_path = folder_path+file_name
 else:
     # Streamlit Cloud（Linux）などその他
     font_path = "pages/NotoSansCJK-Regular.ttc"
+    file_path = "https://ymaeda.jp/data/"+file_name
 
 font_prop = fm.FontProperties(fname=font_path)
 plt.rcParams['font.family'] = font_prop.get_name()
@@ -83,22 +78,23 @@ plt.rcParams['font.family'] = font_prop.get_name()
 
 
 
-# In[16]:
+# In[8]:
 
 
 #
 # データの読み込み
 #
 
-file_name = 'SNA_data.csv'
+# file_name = 'SNA_data.csv'
 
-if sw_data == 'server':
-    url = "https://ymaeda.jp/data/"+file_name
-    df = pd.read_csv(url, index_col=0, encoding='utf-8-sig')
-else:
-    file_path=folder_path+file_name
-    df = pd.read_csv(file_path, index_col=0, encoding='utf-8-sig')
+# if sw_data == 'server':
+#     url = "https://ymaeda.jp/data/"+file_name
+#     df = pd.read_csv(file_path, index_col=0, encoding='utf-8-sig')
+# else:
+#     file_path=folder_path+file_name
+#     df = pd.read_csv(file_path, index_col=0, encoding='utf-8-sig')
 
+df = pd.read_csv(file_path, index_col=0, encoding='utf-8-sig')
 df.columns = df.columns.astype(str)    
 
 
@@ -164,7 +160,7 @@ if st.button("グラフを描画"):
 
 
 
-# In[5]:
+# In[ ]:
 
 
 #
