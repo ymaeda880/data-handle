@@ -39,14 +39,21 @@ def open_by_excel(df, file_name = 'out', folder_path='../MacroData/SNA/',
     subprocess.run(['open', file_path])
 
 
-# In[7]:
+# In[2]:
 
 
 #
 # 環境設定
 #
 
-folder_path='../MacroData/SNA/'
+folder_path='/Users/macmini2025/myVenv/DataAnalysis/MacroData/SNA/'
+
+# sw_local = False
+# if sw_local:
+#     folder_path='../MacroData/SNA/'
+# else:
+#     folder_path='MacroData/SNA/'
+
 file_name = 'SNA_data.csv'
 
 
@@ -98,9 +105,10 @@ df = pd.read_csv(file_path, index_col=0, encoding='utf-8-sig')
 df.columns = df.columns.astype(str)    
 
 
-# In[18]:
+# In[3]:
 
 
+#df.columns
 #df.head()
 
 
@@ -118,7 +126,7 @@ st.dataframe(df)  # インタラクティブな表形式で表示（スクロー
 selected_items = st.multiselect("表示する項目を選んでください", df.index.tolist())
 
 
-# In[18]:
+# In[ ]:
 
 
 #
@@ -160,7 +168,7 @@ if st.button("グラフを描画"):
 
 
 
-# In[ ]:
+# In[5]:
 
 
 #
